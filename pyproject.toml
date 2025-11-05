@@ -23,7 +23,7 @@ requires-python = ">=3.9"
 dependencies = []
 
 [tool.setuptools.package-data]
-"mirror_soiling_data" = ["*.xlsx", "*.json","*.csv"]
+"mirror_soiling_data" = ["**/*.xlsx", "**/*.json","**/*.csv"]
 
 [project.urls]
 "Homepage" = "https://github.com/cholette/mirror_soiling_data"
