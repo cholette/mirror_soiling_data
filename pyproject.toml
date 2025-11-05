@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mirror_soiling_data*"]
+exclude = ["confidential/*"]
+
+[project]
+name = "mirror-soiling-data"
+version = "0.1.0"
+description = "Open-access dataset for solar mirror reflectance losses due to soiling."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [ { name = "Michael Cholette", email = "michael.cholette@qut.edu.au" },
+            { name = "Giovanni Picotti", email = "g.picotti@qut.edu.au"}
+            ]
+requires-python = ">=3.9"
+
+# No dependencies yet, but we'll have them after we add the helper functions
+dependencies = []
+
+[tool.setuptools.package-data]
+"mirror_soiling_data" = ["*.xlsx", "*.json","*.csv"]
+
+[project.urls]
+"Homepage" = "https://github.com/cholette/mirror_soiling_data"
+"Issues" = "https://github.com/cholette/mirror_soiling_data/issues"
