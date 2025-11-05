@@ -9,7 +9,6 @@ on:
 permissions:
   contents: write    # to push CSVs back to the repo
   actions: read
-  metadata: read     # necessary for /traffic/* API access
 
 jobs:
   collect:
@@ -49,3 +48,4 @@ jobs:
           git add stats/*.csv
           git commit -m "metrics snapshot $(date +%F)" || echo "No changes to commit"
           git push
+
