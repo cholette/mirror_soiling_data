@@ -1,0 +1,46 @@
+name: Daily GitHub Metrics Snapshot
+
+on:
+  schedule:
+    # Runs every day at 00:00 UTC
+    - cron: "0 0 * * *"
+  workflow_dispatch:  # allow manual runs
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the repo so we can write files
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # 3. Install dependencies
+      - name: Install Python dependencies
+        run: |
+          pip install requests pandas
+
+      # 4. Run the metrics script
+      - name: Collect GitHub metrics (yesterday only)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python .github/scripts/get_repo_stats.py \
+            cholette mirror_soiling_data \
+            --outdir repo_stats \
+            --yesterday
+
+      # 5. Commit & push results
+      - name: Commit updated metrics
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add stats/*.csv
+          git commit -m "metrics snapshot $(date +%F)" || echo "No changes to commit"
+          git push
