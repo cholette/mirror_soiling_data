@@ -1,9 +1,9 @@
-name: Daily GitHub Metrics Snapshot
+name: Weekly GitHub Metrics Snapshot
 
 on:
   schedule:
     # Runs every day at 00:00 UTC
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * 1"   # every Monday at 00:00 UTC
   workflow_dispatch:  # allow manual runs
 
 permissions:
@@ -48,6 +48,7 @@ jobs:
           git add repo_stats/*.csv
           git commit -m "metrics snapshot $(date +%F)" || echo "No changes to commit"
           git push
+
 
 
 
