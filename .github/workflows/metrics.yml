@@ -37,8 +37,7 @@ jobs:
         run: |
           python .github/scripts/get_repo_stats.py \
             cholette mirror_soiling_data \
-            --outdir repo_stats \
-            --yesterday
+            --outdir repo_stats
 
       # 5. Commit & push results
       - name: Commit updated metrics
@@ -48,6 +47,7 @@ jobs:
           git add repo_stats/*.csv
           git commit -m "metrics snapshot $(date +%F)" || echo "No changes to commit"
           git push
+
 
 
 
