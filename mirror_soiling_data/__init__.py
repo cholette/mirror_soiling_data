@@ -10,7 +10,21 @@ from importlib import resources
 from typing import List
 
 
-def get_dataset_path(dataset: str, filename: str):
+def get_dataset_path(dataset:str):
+
+    pkg_root = resources.files(__package__)
+
+    dataset_path = pkg_root.joinpath(dataset)
+    if not dataset_path.is_dir():
+        raise FileNotFoundError(
+            f"Dataset folder '{dataset}' not found in package '{__package__}'.\n"
+            f"Available datasets: {list_available_datasets()}"
+        )
+    
+    return dataset_path
+
+
+def get_datafile_path(dataset: str, filename: str):
     """
     Return a Traversable path to a data file inside a dataset subfolder.
 
