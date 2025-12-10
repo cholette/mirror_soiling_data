@@ -1,9 +1,9 @@
-name: Daily GitHub Metrics Snapshot
+name: Weekly GitHub Metrics Snapshot
 
 on:
   schedule:
     # Runs every day at 00:00 UTC
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * 1"   # every Monday at 00:00 UTC
   workflow_dispatch:  # allow manual runs
 
 permissions:
@@ -37,8 +37,7 @@ jobs:
         run: |
           python .github/scripts/get_repo_stats.py \
             cholette mirror_soiling_data \
-            --outdir repo_stats \
-            --yesterday
+            --outdir repo_stats
 
       # 5. Commit & push results
       - name: Commit updated metrics
@@ -48,6 +47,8 @@ jobs:
           git add repo_stats/*.csv
           git commit -m "metrics snapshot $(date +%F)" || echo "No changes to commit"
           git push
+
+
 
 
 
