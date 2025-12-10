@@ -24,7 +24,9 @@ jobs:
           pip install build twine
 
       - name: Build the distribution
-        run: python -m build
+        run: |
+          rm -rf dist
+          python -m build
 
       - name: Check the built distributions
         run: twine check dist/*
@@ -33,4 +35,4 @@ jobs:
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: twine upload dist/*
+        run: twine upload --skip-existing dist/*
